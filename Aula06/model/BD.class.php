@@ -17,41 +17,82 @@ class BD{
       );
   }
 
+
+
   public function inserir($nome_tabela, $dados){
+    unset($dados['id']);
     $conn = $this->conn();
     
     //a interrogação será substituida pelo valor de cada indice do vetor
-    $sql = "INSERT INTO $nome_tabela (nome, telefone) VALUE (?, ?);";
-    $st = $conn->prepare($sql);
+    $sql = "INSERT INTO $nome_tabela (";
     
-    //executa o insert passando os valores do vetor referente aos campos de A, B e C
-    $arrayDados = [ $dados['nome'], $dados['telefone'] ];
-    $st->execute($arrayDados);
-  }//certo
+    $flag=0;
+    foreach($dados as $campo => $valor){
+      $sql .= $flag == 0 ? " $campo " : ", $campo";
+      $flag = 1;
+    }
+    $sql .= ") VALUES (";
 
-  public function select($nome_tabela){
-    $conn = $this->conn();
-    
+    $flag = 0;
+    $arrayDados = [];
+    foreach($dados as $campo=>$valor){
+      $sql .= $flag == 0 ? " ?" : ", ?"; 
+      $flag=1;
+      $arrayDados[] = $valor;
+    }
+    $sql .= ");";
+
+    $st = $conn->prepare($sql);
+    $st->execute($arrayDados);
+  }
+
+
+
+  public function select($nome_tabela){   
+    $conn = $this->conn();                
+                                      
     $sql = "SELECT * FROM $nome_tabela;";
-    
+
     $st = $conn->prepare($sql);
     $st->execute();
 
     return $st->fetchAll(PDO::FETCH_CLASS);
-  }//certo
+  }
+  
+
+  
+  public function buscar($nome_tabela, $id){
+    $conn = $this->conn();
+    
+    $sql = "SELECT * FROM $nome_tabela WHERE id=$id;";
+    
+    $st = $conn->prepare($sql);
+    $st->execute();
+
+    return $st->fetchObject();
+  }
+
+
 
   public function update($nome_tabela, $dados){
     $id = $dados['id'];
     $conn = $this->conn();
+    $sql = "UPDATE $nome_tabela SET ";
+
     
-    //a interrogação sera substituida pelo valor de cada indice do vetor
-    $sql = "UPDATE $nome_tabela SET nome = ? telefone = ? WHERE id=$id;";
+    $flag = 0;
+    foreach($dados as $campo=>$valor){
+      $sql .= $flag == 0 ? " $campo = ?" : ", $campo =?"; 
+      $flag=1;
+      $arrayDados[] = $valor;
+    }
+    $sql .= " WHERE id=$id;";
     
     $st = $conn->prepare($sql);
-
-    $arrayDados = [ $dados['nome'], $dados['telefone'] ];
     $st->execute($arrayDados);
-  }//certo
+  }
+
+
 
   public function remove($nome_tabela, $id/*, $ids*/){
     $conn = $this->conn(); 
@@ -67,24 +108,22 @@ class BD{
     $st = $conn->prepare($sql);
     $st->execute();
 
-  }//certo
+  }
 
-  public function buscar($nome_tabela, $dados){
+
+
+  public function pesquisar($nome_tabela, $dados){
     $campo = $dados['campo'];
     $valor = $dados['valor'];
     $conn = $this->conn();
     
-    $sql = "SELECT * FROM $nome_tabela WHERE $campo '%$valor%';";
+    $sql = "SELECT * FROM $nome_tabela WHERE $campo LIKE '%$valor%';";
     
     $st = $conn->prepare($sql);
     $st->execute();
 
     return $st->fetchAll(PDO::FETCH_CLASS);
   }
-
-
-
-  
 
 }
 
