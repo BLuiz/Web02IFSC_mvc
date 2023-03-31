@@ -27,43 +27,71 @@ if(!empty($_POST)){
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Aula</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 
-    <form action="UsuarioList.php" method="post">
-        <select name="campo">
-            <option value="nome">Nome</option>
-            <option value="telefone">Telefone</option>
-        </select>
-        <input type="text" name="valor"/>
-        <input type="submit" value="buscar"/>
-    </form>
+    <div class="container">
+        <h1>Listagem de Usuários</h1>
+        <form action="UsuarioList.php" method="post">
+            <div class="row">
+                <div class="col-2">
+                    <select name="campo" class="form-select">
+                        <option value="nome">Nome</option>
+                        <option value="telefone">Telefone</option>
+                    </select>
+                </div>
+                <div class="col-4">
+                    <input type="text" name="valor" class="form-control" placeholder="Pesquisar"/>
+                </div>
+                <div class="col-6">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-magnifying-glass"></i> Buscar
+                    </button>
+                    <a href="UsuarioForm.php" class="btn btn-success"> Cadastrar </a>
+                </div>
+            </div>
+        </form>
+    
 
-    <a href="UsuarioForm.php">Cadastrar</a>
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>Nome</th>
-            <th>Telefone</th>
-        </tr>
+        <table class="table table-striped table-hover">
+            
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Telefone</th>
+                    <th scope="col">Editar</th>
+                    <th scope="col">Excluir</th>
+                </tr>
+            </thead>
 
-        <?php
-            foreach($load as $item){
-                echo "<tr>
-                    <td>$item->id</td>
-                    <td>$item->nome</td>
-                    <td>$item->telefone</td>
-                    <td>
-                        <a href='./UsuarioForm.php?id=$item->id'> Editar </a>
-                    </td>
-                    <td>
-                        <a href='./UsuarioList.php?id=$item->id' onclick='return confirm(\"Deseja Excluir\")'> Excluir </a>
-                    </td>
+            <tbody>
+            <?php
+            //<span class=\"material-symbols-outlined\">edit</span> </a>
+                foreach($load as $item){
+                    echo "
+                        <tr>
+                            <td scope=\"row\">$item->id</t>
+                            <td>$item->nome</td>
+                            <td>$item->telefone</td>
+                            <td>
+                                <a class=\"text-info\" href='./UsuarioForm.php?id=$item->id'> 
+                                
+                                <i class=\"fa-solid fa-pen-to-square fa-lg \" style=\"color: #002f80;\"></i></a>
+                            </td>
+                            <td>
+                                <a class=\"text-danger\" href='./UsuarioList.php?id=$item->id' onclick='return confirm(\"Deseja Excluir\")'>
+                                <i class=\"fa-solid fa-trash\" style=\"color: #c50d0d;\"></i> </a>
+                            </td>
+                        </tr>";
+                }
+            ?>
+            </tbody>
 
-                    </tr>";
-            }
-        ?>
-    </table>
+        </table>
+    </div>
 
 
 

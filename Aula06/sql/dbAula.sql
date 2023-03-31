@@ -29,11 +29,11 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 
 -- Copiando dados para a tabela dbaula.usuario: ~0 rows (aproximadamente)
 INSERT INTO `usuario` (`id`, `nome`, `telefone`) VALUES
-	(1, 'zé', '(49) 99999-9999'),
-	(2, 'mateus', '(49) 99999-9999'),
-	(3, 'claudio', '(49) 99999-9999'),
-	(5, 'paulo', '(49) 99999-9999'),
-	(6, 'paulinho', '(49) 99999-9999');
+	(7, 'zé', '(49) 99999-9999'),
+	(8, 'mateus', '(49) 99999-9999'),
+	(9, 'claudio', '(49) 99999-9999'),
+	(10, 'paulo', '(49) 99999-9999'),
+	(11, 'paulinho', '(49) 99999-9999');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

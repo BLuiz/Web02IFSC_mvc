@@ -16,11 +16,10 @@
         <?php
         echo "Seja bem vindo, " . $_SESSION['login'] . "<a href='login.php?'>Sair</a>";
         ?>
-        
+        </br>
 
-
-
-
+        <a href="UsuarioForm.php">Cadastrar</a> </br>
+        <a href="UsuarioList.php">Listar</a> </br>
 
 
 
