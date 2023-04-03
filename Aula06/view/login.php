@@ -4,8 +4,9 @@ include '../Util.class.php';
 if (!empty($_POST)){
     Util::logar($_POST);
 }
-
-$_SESSION['sair'] = 1;
+elseif(!empty($_GET['sair'])){
+    Util::logoff();
+}
 
 ?>
 

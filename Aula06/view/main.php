@@ -14,7 +14,7 @@
     <body>
         
         <?php
-        echo "Seja bem vindo, " . $_SESSION['login'] . "<a href='login.php?'>Sair</a>";
+        echo "Seja bem vindo, " . $_SESSION['login'] . "<a href='login.php?sair=1'>Sair</a>";
         ?>
         </br>
 

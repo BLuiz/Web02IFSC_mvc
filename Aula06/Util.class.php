@@ -25,6 +25,11 @@ class Util {
             header("Location: login.php");
         }
     }
+    static function logoff(){
+        session_start();
+        session_destroy();
+    }
+
 }
 
 ?>
